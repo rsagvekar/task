@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Text,
     View,
@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { getBooks, addBookmark, removeBookmark } from '../redux/action';
 import moment from 'moment';
+import { SliderBox } from "react-native-image-slider-box";
 
 export default function List() {
     const { books, bookmarks } = useSelector(state => state.booksReducer);
@@ -39,6 +40,8 @@ export default function List() {
         return false;
     };
 
+    const [images, setImages] = useState(['https://assets.hongkiat.com/uploads/nature-photography/autumn-poolside.jpg', 'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823__340.jpg']);
+
     useEffect(() => {
         fetchBooks();
     }, []);
@@ -49,18 +52,21 @@ export default function List() {
         var date = new Date(); //Current Date
         var momentObj = moment(item.endDate, 'DD-MM-YYYY');
         var diff = momentObj.diff(date, 'days');
-        
         return (
             <View>
                 <View>
-                    <Image
+                    <SliderBox
+                        images={images}
+                        sliderBoxHeight={300}
+                    />
+                    {/* <Image
                         style={{ height: 300, width: '100%' }}
-                        resizeMode={'cover'}
+                        resizeMode={a'cover'}
                         //style={styles.tinyLogo}
                         source={{
                             uri: 'https://assets.hongkiat.com/uploads/nature-photography/autumn-poolside.jpg',
                         }}
-                    />
+                    /> */}
                 </View>
                 <View style={{ height: 150, width: '100%', backgroundColor: '#2395da', flexDirection: 'row' }}>
                     <View style={{ flexDirection: 'column' }}>
@@ -85,7 +91,7 @@ export default function List() {
 
                     <View style={{ flexDirection: 'column', marginLeft: 20 }}>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ marginTop: 85, marginLeft: 5, color: 'white', fontSize: 17, fontWeight: 'bold' }}>{diff}</Text>
+                            <Text style={{ marginTop: 85, marginLeft: 15, color: 'white', fontSize: 17, fontWeight: 'bold' }}>{diff}</Text>
                         </View>
                         <View>
                             <Text style={{ marginTop: 5, marginLeft: 15, fontSize: 15, color: 'white', fontWeight: '400' }}>ENDS IN</Text>
